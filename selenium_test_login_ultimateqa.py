@@ -15,8 +15,6 @@ class Login(unittest.TestCase):
         # navigate to the application home page
         self.driver.get("https://courses.ultimateqa.com/users/sign_in")
 
-        # my_username = "jrantala+temp@gmail.com"
-        # my_password = "foofoofoo"
         my_username = settings.UltimateQA['username']
         my_password = settings.UltimateQA['password']
 
@@ -31,6 +29,16 @@ class Login(unittest.TestCase):
         submit.click()
         # verify that we've gotten through login and landed on the next page
         self.assertEqual("Ultimate QA", self.driver.title)
+
+        # assert that we are on page https://courses.ultimateqa.com/collections
+        self.assertEqual(self.driver.current_url, 'https://courses.ultimateqa.com/collections')
+
+        # find via xpath:
+        # <span class="user-name">j r</span>
+        user_name = self.driver.find_element_by_xpath("//*[@class='user-name']")
+
+        self.assertEqual(user_name.text, 'j r')
+
 
     @classmethod
     def tearDownClass(inst):
